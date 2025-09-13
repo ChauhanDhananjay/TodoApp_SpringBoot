@@ -1,6 +1,8 @@
 package com.gdl.spring.todoapp;
 
 import com.gdl.spring.todoapp.Pojo.TodoList;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,12 +20,12 @@ public class ToDoController {
         todoLists.add(new TodoList(2,2,"task 2",false));
     }
     @GetMapping("/todolist")
-    public List<TodoList> getAllTodoList(){
-        return todoLists;
+    public ResponseEntity<List<TodoList>> getAllTodoList(){
+        return ResponseEntity.ok(todoLists);
     }
     @PostMapping("/todolist")
-    public TodoList createTodo(@RequestBody TodoList newToDo){
+    public ResponseEntity<TodoList> createTodo(@RequestBody TodoList newToDo){
         todoLists.add(newToDo);
-        return newToDo;
+        return ResponseEntity.status(HttpStatus.CREATED).body(newToDo);
     }
 }
